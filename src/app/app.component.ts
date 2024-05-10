@@ -1,13 +1,19 @@
-import { Component } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import {Component, OnInit} from '@angular/core'
+import {RouterOutlet} from '@angular/router'
+import {Store} from '@ngrx/store'
+import {authActions} from './auth/store/actions'
+import {TopBarComponent} from './shared/components/topBar/topBar.component'
 
 @Component({
   selector: 'app-root',
-  standalone: true,
-  imports: [RouterOutlet],
   templateUrl: './app.component.html',
-  styleUrl: './app.component.css'
+  standalone: true,
+  imports: [RouterOutlet, TopBarComponent],
 })
-export class AppComponent {
-  title = 'mediumclone_angular_project';
+export class AppComponent implements OnInit {
+  constructor(private store: Store) {}
+
+  ngOnInit(): void {
+    this.store.dispatch(authActions.getCurrentUser())
+  }
 }
